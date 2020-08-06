@@ -7,7 +7,7 @@
      - name: Add a repositories to download Docker engine
        yum_repository:
           name: Docker
-          description: EPEL Docker repo
+          description: Docker repo
           file: docker
           baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
           gpgcheck: no
