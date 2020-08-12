@@ -1,0 +1,17 @@
+- hosts: localhost
+  vars_files:
+       - secure.yml
+  tasks:
+  - name: "ansible ec2 testing"
+    ec2:
+      key_name: "cloud"
+      region: "ap-south-1"
+      vpc_subnet_id: "subnet-055612c099f27a19e"
+      instance_type: "t2.micro"
+      count: "1"
+      group_id: "sg-0151c3e96e9b3cb48"
+      assign_public_ip: yes
+      image: "ami-0ebc1ac48dfd14136"
+      state: "present"
+      aws_access_key: "{{ myuser }}"
+      aws_secret_key: "{{ mypass }}"
