@@ -1,0 +1,34 @@
+- hosts: all
+  tasks:
+  - name: install httpd package
+    package:
+       name: "httpd"
+       state: present
+    when: ansible_distribution ==  "RedHat"
+    register: x
+  - debug:
+          var: x
+
+  - name: create a directory
+    file:
+       state: directory
+       dest: "/var/www/rohit"
+
+  - name: Conf web server
+    template:
+      dest: /etc/httpd/conf.d/rohit.conf
+      src: files/local.conf
+    when:  x.rc == 0
+    notify: service httpd
+
+  - name: Download Web Page
+    get_url:
+       url: "https://raw.githubusercontent.com/rohit-rai9988/Ansible/master/index.html"
+       dest: "/var/www/rohit"
+
+  handlers:
+  - name: service httpd
+    service:
+       name: httpd
+       state: restarted
+    tags: "service"
